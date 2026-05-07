@@ -121,7 +121,7 @@ export default function Scorecard({ initialData, onSave, onClear }) {
 
   const inputStyle = {
     width: '100%', border: '1.5px solid #e5e7eb', borderRadius: 8,
-    padding: '8px 12px', fontSize: 14, outline: 'none',
+    padding: '8px 12px', fontSize: 14,
     boxSizing: 'border-box', fontFamily: 'inherit'
   }
   const selectStyle = { ...inputStyle, background: 'white' }
@@ -131,8 +131,8 @@ export default function Scorecard({ initialData, onSave, onClear }) {
     <div style={{ maxWidth: 720, margin: '0 auto', padding: '32px 16px 80px' }}>
 
       {savedToast && (
-        <div style={{ position: 'fixed', top: 20, right: 20, background: '#065f46', color: 'white',
-          padding: '10px 20px', borderRadius: 10, fontWeight: 700, fontSize: 14,
+        <div className="toast" style={{ position: 'fixed', top: 20, right: 20, background: '#065f46',
+          color: 'white', padding: '10px 20px', borderRadius: 10, fontWeight: 700, fontSize: 14,
           boxShadow: '0 4px 20px rgba(0,0,0,0.2)', zIndex: 999 }}>
           ✓ Draft saved
         </div>
@@ -151,9 +151,10 @@ export default function Scorecard({ initialData, onSave, onClear }) {
           </p>
         </div>
         {initialData && (
-          <button onClick={onClear} style={{ background: 'none', border: '1.5px solid #e5e7eb',
-            borderRadius: 8, padding: '8px 14px', fontSize: 13, cursor: 'pointer', color: '#374151',
-            fontWeight: 600, whiteSpace: 'nowrap' }}>
+          <button className="back-btn" onClick={onClear}
+            style={{ background: 'none', border: '1.5px solid #e5e7eb', borderRadius: 8,
+              padding: '8px 14px', fontSize: 13, cursor: 'pointer', color: '#374151',
+              fontWeight: 600, whiteSpace: 'nowrap' }}>
             ← All drafts
           </button>
         )}
@@ -168,21 +169,21 @@ export default function Scorecard({ initialData, onSave, onClear }) {
             <label style={{ fontSize: 12, fontWeight: 600, color: '#374151', display: 'block', marginBottom: 4 }}>
               Employee Name
             </label>
-            <input value={employeeName} onChange={e => setEmployeeName(e.target.value)}
+            <input className="sc-input" value={employeeName} onChange={e => setEmployeeName(e.target.value)}
               placeholder="e.g. Alex Eriksson" style={inputStyle} />
           </div>
           <div>
             <label style={{ fontSize: 12, fontWeight: 600, color: '#374151', display: 'block', marginBottom: 4 }}>
               Role Title
             </label>
-            <input value={role} onChange={e => setRole(e.target.value)}
+            <input className="sc-input" value={role} onChange={e => setRole(e.target.value)}
               placeholder="e.g. Product Designer" style={inputStyle} />
           </div>
           <div>
             <label style={{ fontSize: 12, fontWeight: 600, color: '#374151', display: 'block', marginBottom: 4 }}>
               Seniority Level
             </label>
-            <select value={level} onChange={e => setLevel(e.target.value)} style={selectStyle}>
+            <select className="sc-input" value={level} onChange={e => setLevel(e.target.value)} style={selectStyle}>
               <option value="">Select level</option>
               {LEVEL_OPTIONS.map(l => <option key={l}>{l}</option>)}
             </select>
@@ -191,7 +192,7 @@ export default function Scorecard({ initialData, onSave, onClear }) {
             <label style={{ fontSize: 12, fontWeight: 600, color: '#374151', display: 'block', marginBottom: 4 }}>
               Current Span Position
             </label>
-            <select value={spanPosition} onChange={e => setSpanPosition(e.target.value)} style={selectStyle}>
+            <select className="sc-input" value={spanPosition} onChange={e => setSpanPosition(e.target.value)} style={selectStyle}>
               <option value="">Select position</option>
               {SPAN_POSITIONS.map(p => <option key={p}>{p}</option>)}
             </select>
@@ -214,8 +215,8 @@ export default function Scorecard({ initialData, onSave, onClear }) {
           <span style={{ fontSize: 12, fontWeight: 700, color: pct === 100 ? '#065f46' : '#374151' }}>{pct}%</span>
         </div>
         <div style={{ background: '#f3f4f6', borderRadius: 10, height: 8 }}>
-          <div style={{ background: pct === 100 ? '#10b981' : '#7c3aed', height: 8, borderRadius: 10,
-            width: `${pct}%`, transition: 'width 0.3s' }} />
+          <div className="progress-fill" style={{ background: pct === 100 ? '#10b981' : '#7c3aed',
+            height: 8, borderRadius: 10, width: `${pct}%` }} />
         </div>
       </div>
 
@@ -225,9 +226,9 @@ export default function Scorecard({ initialData, onSave, onClear }) {
         const borderColor = r === "Exceeding" ? '#86efac' : r === "Meeting" ? '#93c5fd'
           : r === "Not Meeting" ? '#fca5a5' : '#f3f4f6'
         return (
-          <div key={dim.id} style={{ background: 'white', borderRadius: 16, padding: 24, marginBottom: 16,
-            boxShadow: '0 1px 4px rgba(0,0,0,0.06)', border: `2px solid ${borderColor}`,
-            transition: 'border-color 0.2s' }}>
+          <div key={dim.id} className="dimension-card"
+            style={{ background: 'white', borderRadius: 16, padding: 24, marginBottom: 16,
+              boxShadow: '0 1px 4px rgba(0,0,0,0.06)', border: `2px solid ${borderColor}` }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 14 }}>
               <div style={{ flex: 1 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
@@ -254,9 +255,10 @@ export default function Scorecard({ initialData, onSave, onClear }) {
               {RATINGS.map(opt => {
                 const sel = ratings[dim.id] === opt
                 return (
-                  <button key={opt} onClick={() => setRatings(prev => ({ ...prev, [dim.id]: opt }))}
+                  <button key={opt} className="rating-btn"
+                    onClick={() => setRatings(prev => ({ ...prev, [dim.id]: opt }))}
                     style={{ flex: 1, padding: '10px 8px', borderRadius: 10, cursor: 'pointer',
-                      fontSize: 13, fontWeight: 600, transition: 'all 0.15s', border: '2px solid',
+                      fontSize: 13, fontWeight: 600, border: '2px solid',
                       borderColor: sel ? (opt === "Exceeding" ? '#10b981' : opt === "Meeting" ? '#3b82f6' : '#ef4444') : '#e5e7eb',
                       background: sel ? (opt === "Exceeding" ? '#d1fae5' : opt === "Meeting" ? '#dbeafe' : '#fee2e2') : 'white',
                       color: sel ? (opt === "Exceeding" ? '#065f46' : opt === "Meeting" ? '#1d4ed8' : '#7f1d1d') : '#6b7280' }}>
@@ -267,8 +269,9 @@ export default function Scorecard({ initialData, onSave, onClear }) {
             </div>
 
             {r && (
-              <div style={{ background: r === "Exceeding" ? '#f0fdf4' : r === "Meeting" ? '#eff6ff' : '#fff1f2',
-                borderRadius: 8, padding: '10px 14px', marginBottom: 12, fontSize: 12, color: '#374151' }}>
+              <div key={r} className="criteria-box"
+                style={{ background: r === "Exceeding" ? '#f0fdf4' : r === "Meeting" ? '#eff6ff' : '#fff1f2',
+                  borderRadius: 8, padding: '10px 14px', marginBottom: 12, fontSize: 12, color: '#374151' }}>
                 <strong>What this means:</strong> {dim.criteria[r]}
               </div>
             )}
@@ -277,7 +280,7 @@ export default function Scorecard({ initialData, onSave, onClear }) {
               <label style={{ fontSize: 12, fontWeight: 600, color: '#374151', display: 'block', marginBottom: 4 }}>
                 Evidence & examples (optional but strongly recommended)
               </label>
-              <textarea value={evidence[dim.id] || ''} rows={2} style={textareaStyle}
+              <textarea className="sc-input" value={evidence[dim.id] || ''} rows={2} style={textareaStyle}
                 onChange={e => setEvidence(prev => ({ ...prev, [dim.id]: e.target.value }))}
                 placeholder={`Describe specific examples of ${dim.label.toLowerCase()} that informed this rating...`} />
             </div>
@@ -298,9 +301,9 @@ export default function Scorecard({ initialData, onSave, onClear }) {
             { val: 'up',   label: 'Ready for level progression' },
             { val: 'down', label: 'Level recalibration needed' },
           ].map(opt => (
-            <button key={opt.val} onClick={() => setLevelChange(opt.val)}
+            <button key={opt.val} className="press-btn" onClick={() => setLevelChange(opt.val)}
               style={{ flex: 1, padding: '10px 8px', borderRadius: 10, cursor: 'pointer',
-                fontSize: 12, fontWeight: 600, transition: 'all 0.15s', border: '2px solid',
+                fontSize: 12, fontWeight: 600, border: '2px solid',
                 borderColor: levelChange === opt.val ? '#7c3aed' : '#e5e7eb',
                 background: levelChange === opt.val ? '#f5f3ff' : 'white',
                 color: levelChange === opt.val ? '#5b21b6' : '#6b7280' }}>
@@ -317,27 +320,26 @@ export default function Scorecard({ initialData, onSave, onClear }) {
         <p style={{ fontSize: 13, color: '#6b7280', margin: '0 0 12px' }}>
           Key growth areas, stretch goals, or development themes to bring into the year-end conversation.
         </p>
-        <textarea value={devNotes} onChange={e => setDevNotes(e.target.value)} rows={3}
+        <textarea className="sc-input" value={devNotes} onChange={e => setDevNotes(e.target.value)} rows={3}
           style={textareaStyle}
           placeholder="What should this person focus on in the next 6 months? What would 'Exceeding' look like for them next year?" />
       </div>
 
       {/* Summary */}
       {overall && (
-        <div style={{ background: 'linear-gradient(135deg,#1a1a2e,#2d2d5e)', borderRadius: 16,
-          padding: 24, marginBottom: 16, color: 'white' }}>
+        <div className="summary-card" style={{ background: 'linear-gradient(135deg,#1a1a2e,#2d2d5e)',
+          borderRadius: 16, padding: 24, marginBottom: 16, color: 'white' }}>
           <h2 style={{ fontSize: 15, fontWeight: 700, margin: '0 0 16px' }}>Scorecard Summary</h2>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>
             {[
-              { label: 'Weighted Score',    value: `${score.toFixed(2)} / 3.00` },
-              { label: 'Overall Band',      value: overall },
-              { label: 'Span Position',     value: spanPosition || '—' },
+              { label: 'Weighted Score',     value: `${score.toFixed(2)} / 3.00` },
+              { label: 'Overall Band',       value: overall },
+              { label: 'Span Position',      value: spanPosition || '—' },
               { label: 'Suggested Increase', value: suggestedIncrease || '—', highlight: increaseResult?.pct > 0 },
             ].map(item => (
               <div key={item.label} style={{ background: 'rgba(255,255,255,0.08)', borderRadius: 10, padding: '12px 14px' }}>
                 <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginBottom: 4 }}>{item.label}</div>
-                <div style={{ fontSize: 16, fontWeight: 800,
-                  color: item.highlight ? '#86efac' : 'white' }}>
+                <div style={{ fontSize: 16, fontWeight: 800, color: item.highlight ? '#86efac' : 'white' }}>
                   {item.value}
                 </div>
               </div>
@@ -346,8 +348,9 @@ export default function Scorecard({ initialData, onSave, onClear }) {
           <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', margin: '0 0 16px' }}>
             * Increase guidance is subject to calibration. Final decisions require department-level sign-off.
           </p>
-          <button onClick={handleSave} style={{ background: '#7c3aed', color: 'white', border: 'none',
-            borderRadius: 10, padding: '12px 24px', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
+          <button className="save-btn" onClick={handleSave}
+            style={{ background: '#7c3aed', color: 'white', border: 'none', borderRadius: 10,
+              padding: '12px 24px', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
             Save Draft
           </button>
           {!employeeName && (
