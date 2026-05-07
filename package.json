@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "vite build && gh-pages -d dist"
+    "deploy": "./node_modules/.bin/vite build && ./node_modules/.bin/gh-pages -d dist"
   },
   "dependencies": {
     "react": "^18.2.0",
